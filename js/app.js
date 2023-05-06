@@ -3,7 +3,7 @@ import { key } from "./key.js";
 function init() {
     const movieDisplay = document.getElementById("movie-display");
     getNowPlaying(movieDisplay);
-    getUpcoming(movieDisplay)
+    toggleHandler(movieDisplay)
 }
 
 init();
@@ -16,16 +16,12 @@ function getNowPlaying(movieDisplay) {
 }
 
 function getUpcoming(movieDisplay) {
-    const viewToggle = document.getElementById("view-toggle");
-    viewToggle.addEventListener("click", () => {
         fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${key}&language=en-US&region=US&page=1`)
         .then(res => res.json())
         .then(movies => {
-            movieDisplay.textContent = "";
             movies.results.forEach(movie => getMovieInfo(movie, movieDisplay));
         })
         .catch(err => console.log(err));
-    });
 }
 
 function getMovieInfo(movie, movieDisplay) {
@@ -51,7 +47,21 @@ function getMovieInfo(movie, movieDisplay) {
     console.log(movie);
 }
 
+function toggleHandler(movieDisplay) {
+    const viewToggle = document.getElementById("view-toggle");
+    viewToggle.addEventListener("click", () => {
+        if(viewToggle.textContent === "View Upcoming Releases") {
+            movieDisplay.textContent = "";
+            getUpcoming(movieDisplay);
+            viewToggle.textContent = "View Now Playing";
+        } else {
+            movieDisplay.textContent = "";
+            getNowPlaying(movieDisplay);
+            viewToggle.textContent = "View Upcoming Releases";
+        }
+    })
 
+}
 
 function modifyTitle(title) {
     const newTitle = title.split("").map(letter => {
