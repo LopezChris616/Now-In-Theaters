@@ -1,3 +1,7 @@
+html {
+    background-color: #01010e;
+}
+
 img {
     width: 250px;
 }
@@ -12,6 +16,15 @@ img {
     margin: 15px;
     padding: 15px;
     width: 250px;
-    border: 2px solid black;
-    border-radius: 2%;;
+    border: 2px solid rgb(66, 0, 128);;
+    border-radius: 2%;
+    color: white;
+}
+
+.movie-card a {
+    color: rgb(66, 0, 128);
+}
+
+.movie-card a:hover  {
+    color: white;
 }
