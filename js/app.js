@@ -103,6 +103,18 @@ function movieSort(movies, movieDisplay) {
             movieDisplay.textContent = "";
             sorted.forEach(movie => getMovieInfo(movie, movieDisplay))
             // console.log(sorted);
+        } else if(sortMovies.value === "rating") {
+            const sorted = movies.sort((a, b) => {
+                if(a.vote_average < b.vote_average) {
+                    return 1;
+                } else if(a.vote_average > b.vote_average) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            });
+            movieDisplay.textContent = "";
+            sorted.forEach(movie => getMovieInfo(movie, movieDisplay))
         }
     })
 
