@@ -14,9 +14,7 @@ function getNowPlaying(movieDisplay, sortMovies) {
     fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${key}&language=en-US&region=US&page=1`)
         .then(res => res.json())
         .then(movies => {
-            movies.results.forEach(movie => getMovieInfo(movie, movieDisplay));
-            movieSort(movies.results, movieDisplay, sortMovies);
-            sortMovies.value = "sort-by";
+            displayMovies(movies, movieDisplay, sortMovies);
         })
         .catch(err => console.log(err));
 }
@@ -25,11 +23,15 @@ function getUpcoming(movieDisplay, sortMovies) {
     fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${key}&language=en-US&region=US&page=1`)
         .then(res => res.json())
         .then(movies => {
-            movies.results.forEach(movie => getMovieInfo(movie, movieDisplay));
-            movieSort(movies.results, movieDisplay, sortMovies);
-            sortMovies.value = "sort-by";
+            displayMovies(movies, movieDisplay, sortMovies);
         })
         .catch(err => console.log(err));
+}
+
+function displayMovies(movies, movieDisplay, sortMovies) {
+    movies.results.forEach(movie => getMovieInfo(movie, movieDisplay));
+    movieSort(movies.results, movieDisplay, sortMovies);
+    sortMovies.value = "sort-by";
 }
 
 function getMovieInfo(movie, movieDisplay) {
@@ -93,7 +95,6 @@ function movieSearch(movieDisplay, sortMovies) {
 function movieSort(movies, movieDisplay, sortMovies) {
     sortMovies.addEventListener("change", () => {
         if(sortMovies.value === "alphabetical") {
-            console.log(sortMovies.value);
             sortHelper(movieDisplay, movies, "title", -1, 1);
         } else if(sortMovies.value === "rating") {
             sortHelper(movieDisplay, movies, "vote_average", 1, -1);
