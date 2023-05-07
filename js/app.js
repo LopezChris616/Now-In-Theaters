@@ -2,30 +2,32 @@ import { key } from "./key.js";
 
 function init() {
     const movieDisplay = document.getElementById("movie-display");
-    getNowPlaying(movieDisplay);
-    toggleHandler(movieDisplay);
-    movieSearch(movieDisplay);
-    // movieSort()
+    const sortMovies = document.getElementById("sort-movies");
+    getNowPlaying(movieDisplay, sortMovies);
+    toggleHandler(movieDisplay, sortMovies);
+    movieSearch(movieDisplay, sortMovies);
 }
 
 init();
 
-function getNowPlaying(movieDisplay) {
+function getNowPlaying(movieDisplay, sortMovies) {
     fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${key}&language=en-US&region=US&page=1`)
         .then(res => res.json())
         .then(movies => {
             movies.results.forEach(movie => getMovieInfo(movie, movieDisplay));
-            movieSort(movies.results, movieDisplay);
+            movieSort(movies.results, movieDisplay, sortMovies);
+            sortMovies.value = "sort-by";
         })
         .catch(err => console.log(err));
 }
 
-function getUpcoming(movieDisplay) {
+function getUpcoming(movieDisplay, sortMovies) {
     fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${key}&language=en-US&region=US&page=1`)
         .then(res => res.json())
         .then(movies => {
             movies.results.forEach(movie => getMovieInfo(movie, movieDisplay));
-            movieSort(movies.results, movieDisplay);
+            movieSort(movies.results, movieDisplay, sortMovies);
+            sortMovies.value = "sort-by";
         })
         .catch(err => console.log(err));
 }
@@ -51,26 +53,26 @@ function getMovieInfo(movie, movieDisplay) {
     movieDisplay.appendChild(movieCard);
 }
 
-function toggleHandler(movieDisplay) {
+function toggleHandler(movieDisplay, sortMovies) {
     const viewToggle = document.getElementById("view-toggle");
     const movieGroup = document.getElementById("movie-group");
     viewToggle.addEventListener("click", () => {
         if(viewToggle.textContent === "View Upcoming Releases") {
-            toggleHelper(getUpcoming, viewToggle, "View Now Playing", movieGroup, "Coming soon to a theater near you", movieDisplay);
+            toggleHelper(getUpcoming, viewToggle, "View Now Playing", movieGroup, "Coming soon to a theater near you", movieDisplay, sortMovies);
         } else {
-            toggleHelper(getNowPlaying, viewToggle, "View Upcoming Releases", movieGroup, "Now Playing", movieDisplay);
+            toggleHelper(getNowPlaying, viewToggle, "View Upcoming Releases", movieGroup, "Now Playing", movieDisplay, sortMovies);
         }
     });
 }
 
-function toggleHelper(toggleDisplay, btn, btnText, header, headerText, movieDisplay) {
+function toggleHelper(toggleDisplay, btn, btnText, header, headerText, movieDisplay, sortMovies) {
     movieDisplay.textContent = "";
-    toggleDisplay(movieDisplay);
+    toggleDisplay(movieDisplay, sortMovies);
     btn.textContent = btnText;
     header.textContent = headerText;
 }
 
-function movieSearch(movieDisplay) {
+function movieSearch(movieDisplay, sortMovies) {
     const searchForm = document.getElementById("search-form");
     searchForm.addEventListener("submit", event => {
         event.preventDefault();
@@ -81,16 +83,17 @@ function movieSearch(movieDisplay) {
                 movies.results.forEach(movie => {
                     getMovieInfo(movie, movieDisplay);
                 })
-                movieSort(movies.results, movieDisplay);
+                sortMovies.value = "sort-by";
+                movieSort(movies.results, movieDisplay, sortMovies);
             })
             .catch(err => console.log(err));
     });
 }
 
-function movieSort(movies, movieDisplay) {
-    const sortMovies = document.getElementById("sort-movies");
+function movieSort(movies, movieDisplay, sortMovies) {
     sortMovies.addEventListener("change", () => {
         if(sortMovies.value === "alphabetical") {
+            console.log(sortMovies.value);
             sortHelper(movieDisplay, movies, "title", -1, 1);
         } else if(sortMovies.value === "rating") {
             sortHelper(movieDisplay, movies, "vote_average", 1, -1);
