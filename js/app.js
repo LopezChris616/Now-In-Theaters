@@ -91,33 +91,25 @@ function movieSort(movies, movieDisplay) {
     const sortMovies = document.getElementById("sort-movies");
     sortMovies.addEventListener("change", () => {
         if(sortMovies.value === "alphabetical") {
-            const sorted = movies.sort((a, b) => {
-                if(a.title < b.title) {
-                    return -1;
-                } else if(a.title > b.title) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            });
-            movieDisplay.textContent = "";
-            sorted.forEach(movie => getMovieInfo(movie, movieDisplay))
-            // console.log(sorted);
+            sortHelper(movieDisplay, movies, "title", -1, 1);
         } else if(sortMovies.value === "rating") {
-            const sorted = movies.sort((a, b) => {
-                if(a.vote_average < b.vote_average) {
-                    return 1;
-                } else if(a.vote_average > b.vote_average) {
-                    return -1;
-                } else {
-                    return 0;
-                }
-            });
-            movieDisplay.textContent = "";
-            sorted.forEach(movie => getMovieInfo(movie, movieDisplay))
+            sortHelper(movieDisplay, movies, "vote_average", 1, -1);
         }
     })
+}
 
+function sortHelper(movieDisplay, movies, sortType, sortOrder1, sortOrder2) {
+    const sorted = movies.sort((a, b) => {
+        if(a[sortType] < b[sortType]) {
+            return sortOrder1;
+        } else if(a[sortType] > b[sortType]) {
+            return sortOrder2;
+        } else {
+            return 0;
+        }
+    });
+    movieDisplay.textContent = "";
+    sorted.forEach(movie => getMovieInfo(movie, movieDisplay));
 }
 
 function modifyTitle(title) {
