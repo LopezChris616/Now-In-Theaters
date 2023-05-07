@@ -5,6 +5,7 @@ function init() {
     getNowPlaying(movieDisplay);
     toggleHandler(movieDisplay);
     movieSearch(movieDisplay);
+    // movieSort()
 }
 
 init();
@@ -12,7 +13,10 @@ init();
 function getNowPlaying(movieDisplay) {
     fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${key}&language=en-US&region=US&page=1`)
         .then(res => res.json())
-        .then(movies => movies.results.forEach(movie => getMovieInfo(movie, movieDisplay)))
+        .then(movies => {
+            movies.results.forEach(movie => getMovieInfo(movie, movieDisplay));
+            movieSort(movies.results, movieDisplay);
+        })
         .catch(err => console.log(err));
 }
 
@@ -79,6 +83,27 @@ function movieSearch(movieDisplay) {
             })
             .catch(err => console.log(err));
     });
+}
+
+function movieSort(movies, movieDisplay) {
+    const sortMovies = document.getElementById("sort-movies");
+    sortMovies.addEventListener("change", () => {
+        if(sortMovies.value === "alphabetical") {
+            const sorted = movies.sort((a, b) => {
+                if(a.title < b.title) {
+                    return -1;
+                } else if(a.title > b.title) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+            movieDisplay.textContent = "";
+            sorted.forEach(movie => getMovieInfo(movie, movieDisplay))
+            // console.log(sorted);
+        }
+    })
+
 }
 
 function modifyTitle(title) {
