@@ -51,10 +51,12 @@ function getMovieInfo(movie, movieDisplay) {
 
     if(movie.poster_path === null) {
         moviePoster.setAttribute("src", "https://timescineplex.com/times/img/no-poster.png");
+        moviePoster.setAttribute("alt", `No poster available for the movie, ${movie.title}`);
     } else {
         moviePoster.setAttribute("src", `https://image.tmdb.org/t/p/original${movie.poster_path}`);
+        moviePoster.setAttribute("alt", `Poster for the movie, ${movie.title}`);
     }
-    
+
     movieRating.textContent = `${movie.vote_average}/10 | ${movie.vote_count} ratings`;
     movieReleaseDate.textContent = movie.release_date;
 
