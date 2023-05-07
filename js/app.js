@@ -25,6 +25,7 @@ function getUpcoming(movieDisplay) {
         .then(res => res.json())
         .then(movies => {
             movies.results.forEach(movie => getMovieInfo(movie, movieDisplay));
+            movieSort(movies.results, movieDisplay);
         })
         .catch(err => console.log(err));
 }
@@ -80,6 +81,7 @@ function movieSearch(movieDisplay) {
                 movies.results.forEach(movie => {
                     getMovieInfo(movie, movieDisplay);
                 })
+                movieSort(movies.results, movieDisplay);
             })
             .catch(err => console.log(err));
     });
