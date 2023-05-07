@@ -32,6 +32,7 @@ function displayMovies(movies, movieDisplay, sortMovies) {
     movies.results.forEach(movie => getMovieInfo(movie, movieDisplay));
     movieSort(movies.results, movieDisplay, sortMovies);
     sortMovies.value = "sort-by";
+    console.log(movies);
 }
 
 function getMovieInfo(movie, movieDisplay) {
@@ -47,7 +48,13 @@ function getMovieInfo(movie, movieDisplay) {
     movieTickets.setAttribute("href", `https://www.fandango.com/search?q=${modifyTitle(movie.title)}&mode=all`);
     movieTickets.setAttribute("target", "_blank");
     movieTickets.textContent = "Get tickets here!";
-    moviePoster.setAttribute("src", `https://image.tmdb.org/t/p/original${movie.poster_path}`);
+
+    if(movie.poster_path === null) {
+        moviePoster.setAttribute("src", "https://timescineplex.com/times/img/no-poster.png");
+    } else {
+        moviePoster.setAttribute("src", `https://image.tmdb.org/t/p/original${movie.poster_path}`);
+    }
+    
     movieRating.textContent = `${movie.vote_average}/10 | ${movie.vote_count} ratings`;
     movieReleaseDate.textContent = movie.release_date;
 
@@ -79,7 +86,10 @@ function movieSearch(movieDisplay, sortMovies) {
     searchForm.addEventListener("submit", event => {
         event.preventDefault();
         fetch(`https://api.themoviedb.org/3/search/movie?api_key=${key}&language=en-US&query=${event.target[0].value}&page=1&include_adult=false`)
-            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                return res.json();
+            })
             .then(movies => {
                 movieDisplay.textContent = "";
                 movies.results.forEach(movie => {
