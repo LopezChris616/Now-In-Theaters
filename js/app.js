@@ -13,18 +13,14 @@ init();
 function getNowPlaying(movieDisplay, sortMovies) {
     fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${key}&language=en-US&region=US&page=1`)
         .then(res => res.json())
-        .then(movies => {
-            displayMovies(movies, movieDisplay, sortMovies);
-        })
+        .then(movies => displayMovies(movies, movieDisplay, sortMovies))
         .catch(err => console.log(err));
 }
 
 function getUpcoming(movieDisplay, sortMovies) {
     fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${key}&language=en-US&region=US&page=1`)
         .then(res => res.json())
-        .then(movies => {
-            displayMovies(movies, movieDisplay, sortMovies);
-        })
+        .then(movies => displayMovies(movies, movieDisplay, sortMovies))
         .catch(err => console.log(err));
 }
 
@@ -32,7 +28,6 @@ function displayMovies(movies, movieDisplay, sortMovies) {
     movies.results.forEach(movie => getMovieInfo(movie, movieDisplay));
     movieSort(movies.results, movieDisplay, sortMovies);
     sortMovies.value = "sort-by";
-    console.log(movies);
 }
 
 function getMovieInfo(movie, movieDisplay) {
@@ -60,7 +55,7 @@ function getMovieInfo(movie, movieDisplay) {
     movieRating.textContent = `${movie.vote_average}/10 | ${movie.vote_count} ratings`;
     movieReleaseDate.textContent = movie.release_date;
 
-    movieCard.append(movieTitle, moviePoster, movieReleaseDate, movieRating, movieTickets);
+    movieCard.append(moviePoster, movieTitle, movieReleaseDate, movieRating, movieTickets);
     movieDisplay.appendChild(movieCard);
 }
 
@@ -88,15 +83,12 @@ function movieSearch(movieDisplay, sortMovies) {
     searchForm.addEventListener("submit", event => {
         event.preventDefault();
         fetch(`https://api.themoviedb.org/3/search/movie?api_key=${key}&language=en-US&query=${event.target[0].value}&page=1&include_adult=false`)
-            .then(res => {
-                console.log(res);
-                return res.json();
-            })
+            .then(res => res.json())
             .then(movies => {
                 movieDisplay.textContent = "";
                 movies.results.forEach(movie => {
                     getMovieInfo(movie, movieDisplay);
-                })
+                });
                 sortMovies.value = "sort-by";
                 movieSort(movies.results, movieDisplay, sortMovies);
             })
