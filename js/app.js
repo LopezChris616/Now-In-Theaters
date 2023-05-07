@@ -49,18 +49,21 @@ function getMovieInfo(movie, movieDisplay) {
 
 function toggleHandler(movieDisplay) {
     const viewToggle = document.getElementById("view-toggle");
+    const movieGroup = document.getElementById("movie-group");
     viewToggle.addEventListener("click", () => {
         if(viewToggle.textContent === "View Upcoming Releases") {
-            movieDisplay.textContent = "";
-            getUpcoming(movieDisplay);
-            viewToggle.textContent = "View Now Playing";
+            toggleHelper(getUpcoming, viewToggle, "View Now Playing", movieGroup, "Coming soon to a theater near you", movieDisplay);
         } else {
-            movieDisplay.textContent = "";
-            getNowPlaying(movieDisplay);
-            viewToggle.textContent = "View Upcoming Releases";
+            toggleHelper(getNowPlaying, viewToggle, "View Upcoming Releases", movieGroup, "Now Playing", movieDisplay);
         }
-    })
+    });
+}
 
+function toggleHelper(toggleDisplay, btn, btnText, header, headerText, movieDisplay) {
+    movieDisplay.textContent = "";
+    toggleDisplay(movieDisplay);
+    btn.textContent = btnText;
+    header.textContent = headerText;
 }
 
 function modifyTitle(title) {
