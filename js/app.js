@@ -3,9 +3,10 @@ import { key } from "./key.js";
 function init() {
     const movieDisplay = document.getElementById("movie-display");
     const sortMovies = document.getElementById("sort-movies");
+    const movieGroup = document.getElementById("movie-group");
     getNowPlaying(movieDisplay, sortMovies);
-    toggleHandler(movieDisplay, sortMovies);
-    movieSearch(movieDisplay, sortMovies);
+    toggleHandler(movieDisplay, sortMovies, movieGroup);
+    movieSearch(movieDisplay, sortMovies, movieGroup);
 }
 
 init();
@@ -59,9 +60,8 @@ function getMovieInfo(movie, movieDisplay) {
     movieDisplay.appendChild(movieCard);
 }
 
-function toggleHandler(movieDisplay, sortMovies) {
+function toggleHandler(movieDisplay, sortMovies, movieGroup) {
     const viewToggle = document.getElementById("view-toggle");
-    const movieGroup = document.getElementById("movie-group");
     viewToggle.addEventListener("click", () => {
         if(viewToggle.textContent === "View Upcoming Releases") {
             toggleHelper(getUpcoming, viewToggle, "View Now Playing", movieGroup, "Coming soon to a theater near you", movieDisplay, sortMovies);
@@ -78,7 +78,7 @@ function toggleHelper(toggleDisplay, btn, btnText, header, headerText, movieDisp
     header.textContent = headerText;
 }
 
-function movieSearch(movieDisplay, sortMovies) {
+function movieSearch(movieDisplay, sortMovies, movieGroup) {
     const searchForm = document.getElementById("search-form");
     searchForm.addEventListener("submit", event => {
         event.preventDefault();
@@ -91,6 +91,7 @@ function movieSearch(movieDisplay, sortMovies) {
                 });
                 sortMovies.value = "sort-by";
                 movieSort(movies.results, movieDisplay, sortMovies);
+                movieGroup.textContent = "Search Results";
             })
             .catch(err => console.log(err));
     });

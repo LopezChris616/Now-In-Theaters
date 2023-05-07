@@ -15,7 +15,11 @@ h1, #search-form {
     text-align: center;
 }
 
-#view-toggle {
+/* select {
+    background-color: #01010e;
+} */
+
+.button {
     background-color:#01010e;
     color: white;
     border:3px solid rgb(66, 0, 128);
@@ -54,8 +58,6 @@ h1, #search-form {
     border: 2px solid rgb(66, 0, 128);;
     border-radius: 2%;
     color: white;
-    /* flex-basis: 10%; */
-    /* flex-grow: 1; */
 }
 
 .movie-card a {
