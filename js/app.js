@@ -3,7 +3,8 @@ import { key } from "./key.js";
 function init() {
     const movieDisplay = document.getElementById("movie-display");
     getNowPlaying(movieDisplay);
-    toggleHandler(movieDisplay)
+    toggleHandler(movieDisplay);
+    movieSearch(movieDisplay);
 }
 
 init();
@@ -16,7 +17,7 @@ function getNowPlaying(movieDisplay) {
 }
 
 function getUpcoming(movieDisplay) {
-        fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${key}&language=en-US&region=US&page=1`)
+    fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${key}&language=en-US&region=US&page=1`)
         .then(res => res.json())
         .then(movies => {
             movies.results.forEach(movie => getMovieInfo(movie, movieDisplay));
@@ -43,8 +44,6 @@ function getMovieInfo(movie, movieDisplay) {
 
     movieCard.append(movieTitle, moviePoster, movieReleaseDate, movieRating, movieTickets);
     movieDisplay.appendChild(movieCard);
-
-    console.log(movie);
 }
 
 function toggleHandler(movieDisplay) {
@@ -66,12 +65,28 @@ function toggleHelper(toggleDisplay, btn, btnText, header, headerText, movieDisp
     header.textContent = headerText;
 }
 
+function movieSearch(movieDisplay) {
+    const searchForm = document.getElementById("search-form");
+    searchForm.addEventListener("submit", event => {
+        event.preventDefault();
+        fetch(`https://api.themoviedb.org/3/search/movie?api_key=${key}&language=en-US&query=${event.target[0].value}&page=1&include_adult=false`)
+            .then(res => res.json())
+            .then(movies => {
+                movieDisplay.textContent = "";
+                movies.results.forEach(movie => {
+                    getMovieInfo(movie, movieDisplay);
+                })
+            })
+            .catch(err => console.log(err));
+    });
+}
+
 function modifyTitle(title) {
     const newTitle = title.split("").map(letter => {
         if(letter === " ") {
             letter = "+";
         }
         return letter;
-    })
+    });
     return newTitle.join("");
 }
