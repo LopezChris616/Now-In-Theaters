@@ -22,6 +22,10 @@ h1, #search-form {
     cursor: pointer;
 }
 
+input[class="input-style"][type="text"] {
+    cursor: text;
+}
+
 #movie-display {
     display: flex;
     justify-content: center;
