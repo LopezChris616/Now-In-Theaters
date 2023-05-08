@@ -22,6 +22,10 @@ h1, #search-form {
     cursor: pointer;
 }
 
+button[class="input-style"]:hover, input[class="input-style"][type="submit"]:hover {
+    background-color: rgb(66, 0, 128);
+}
+
 input[class="input-style"][type="text"] {
     cursor: text;
 }
@@ -54,7 +58,7 @@ input[class="input-style"][type="text"] {
     margin: 15px;
     padding: 15px;
     width: 250px;
-    border: 2px solid rgb(66, 0, 128);;
+    border: 1px solid rgb(66, 0, 128);
     border-radius: 2%;
     color: white;
 }
