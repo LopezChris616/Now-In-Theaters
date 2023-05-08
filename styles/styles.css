@@ -4,7 +4,6 @@ html {
     background-color: #01010e;
     color: white;
     font-family: "Montserrat", sans-serif;
-    /* font-weight: 300; */
 }
 
 img {
@@ -15,11 +14,7 @@ h1, #search-form {
     text-align: center;
 }
 
-/* select {
-    background-color: #01010e;
-} */
-
-.button {
+.input-style {
     background-color:#01010e;
     color: white;
     border:3px solid rgb(66, 0, 128);
