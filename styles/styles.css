@@ -14,14 +14,6 @@ h1, #search-form {
     text-align: center;
 }
 
-.input-style {
-    background-color:#01010e;
-    color: white;
-    border:3px solid rgb(66, 0, 128);
-    padding: 10px;
-    cursor: pointer;
-}
-
 button[class="input-style"]:hover, input[class="input-style"][type="submit"]:hover {
     background-color: rgb(66, 0, 128);
 }
@@ -54,6 +46,14 @@ input[class="input-style"][type="text"] {
     align-self: flex-end;
 }
 
+.input-style {
+    background-color:#01010e;
+    color: white;
+    border:3px solid rgb(66, 0, 128);
+    padding: 10px;
+    cursor: pointer;
+}
+
 .movie-card {
     margin: 15px;
     padding: 15px;
@@ -69,4 +69,15 @@ input[class="input-style"][type="text"] {
 
 .movie-card a:hover  {
     color: white;
+}
+
+@media screen and (max-width: 1218px) {
+    #change-container {
+        flex-direction: column;
+    }
+
+    #movie-group, #change-movies {
+        align-self: center;
+        margin: 10px;
+    }
 }
