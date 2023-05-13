@@ -20,7 +20,7 @@ export { key };
 3. Due to the CORS policy of the API, only specific protocol schemes allow access to the API. As such, simply opening up the page in your browser directly from the directory will not work. You will need a way to open up the app using one of the supported protocol schemes of the API. One way is to use the VS Code extension, [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer). Simply install the extension, and with the project folder opened up in VS Code, click the "Go Live" button found in the status bar in the bottom right of the editor (If you're not sure what to do or can't find the button, you can find instructions in the install page of Live Server).
 4. Now the app should run as intended!
 
-## Contributing
+### Contributing
 
 Pull requests are welcome. For major changes, please open an issue first
 to discuss what you would like to change.
