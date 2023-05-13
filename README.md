@@ -30,3 +30,5 @@ to discuss what you would like to change.
 The Movie Database API: https://developers.themoviedb.org/3/getting-started/introduction
 
 "No Poster Available" poster taken from [Times Cineplex](https://timescineplex.com) from [this link](https://timescineplex.com/times/img/no-poster.png).
+
+Favicon icon provided by [Icons8](https://icons8.com/).
