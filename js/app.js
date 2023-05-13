@@ -124,7 +124,7 @@ function movieSort(movies, movieDisplay, sortMovies) {
 
 // Helper function used to sort movies alphabetically or by user rating from movieSort()
 function sortHelper(movieDisplay, movies, sortType, sortOrder1, sortOrder2) {
-    const sorted = movies.sort((a, b) => {
+    const sortFilms = movies.sort((a, b) => {
         if(a[sortType] < b[sortType]) {
             return sortOrder1;
         } else if(a[sortType] > b[sortType]) {
@@ -134,18 +134,18 @@ function sortHelper(movieDisplay, movies, sortType, sortOrder1, sortOrder2) {
         }
     });
     movieDisplay.textContent = "";
-    sorted.forEach(movie => getMovieInfo(movie, movieDisplay));
+    sortFilms.forEach(movie => getMovieInfo(movie, movieDisplay));
 }
 
 // Used to add a "+" sign in between each word in a movie title and adding that as a query for when the user
 // clicks the link to get tickets on Fandango. Fandango actually still searches for most movies without adding
 // the + sign, but I did see a few cases where it did not work, so I decided to make this just to be safe
 function modifyTitle(title) {
-    const newTitle = title.split("").map(letter => {
+    const addPlusSign = title.split("").map(letter => {
         if(letter === " ") {
             letter = "+";
         }
         return letter;
     });
-    return newTitle.join("");
+    return addPlusSign.join("");
 }
