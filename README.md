@@ -7,4 +7,4 @@ Now In Theaters is an application that allows you to view what movies are curren
 
 ### Credit
 
-The Movies Database API: https://developers.themoviedb.org/3/getting-started/introduction
+The Movie Database API: https://developers.themoviedb.org/3/getting-started/introduction

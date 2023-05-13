@@ -1,5 +1,10 @@
+// All movie data retrieved from The Movie Database API
+// https://developers.themoviedb.org/3/getting-started/introduction
+
+// Used to hide API key from GitHub
 import { key } from "./key.js";
 
+// Used to call all functions needed to display functionality onto page
 function init() {
     const movieDisplay = document.getElementById("movie-display");
     const sortMovies = document.getElementById("sort-movies");
@@ -11,6 +16,7 @@ function init() {
 
 init();
 
+// GET all Now Playing movies from TMDB API
 function getNowPlaying(movieDisplay, sortMovies) {
     fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${key}&language=en-US&region=US&page=1`)
         .then(res => res.json())
@@ -18,6 +24,8 @@ function getNowPlaying(movieDisplay, sortMovies) {
         .catch(err => console.log(err));
 }
 
+
+// GET all Upcoming Releases from TMDB API
 function getUpcoming(movieDisplay, sortMovies) {
     fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${key}&language=en-US&region=US&page=1`)
         .then(res => res.json())
@@ -25,12 +33,14 @@ function getUpcoming(movieDisplay, sortMovies) {
         .catch(err => console.log(err));
 }
 
+// Displays to the page all movies retrieved from API
 function displayMovies(movies, movieDisplay, sortMovies) {
     movies.results.forEach(movie => getMovieInfo(movie, movieDisplay));
     movieSort(movies.results, movieDisplay, sortMovies);
     sortMovies.value = "sort-by";
 }
 
+// Called for each movie object to display each movie to the page
 function getMovieInfo(movie, movieDisplay) {
     const movieCard = document.createElement("div");
     const movieTitle = document.createElement("h3");
@@ -45,6 +55,7 @@ function getMovieInfo(movie, movieDisplay) {
     movieTickets.setAttribute("target", "_blank");
     movieTickets.textContent = "Get tickets here!";
 
+    // Some movies have no poster available, so a generic "No Poster Available" poster is displayed instead
     if(movie.poster_path === null) {
         moviePoster.setAttribute("src", "https://timescineplex.com/times/img/no-poster.png");
         moviePoster.setAttribute("alt", `No poster available for the movie, ${movie.title}`);
@@ -60,6 +71,7 @@ function getMovieInfo(movie, movieDisplay) {
     movieDisplay.appendChild(movieCard);
 }
 
+// Click listener to toggle between showing movies now playing and upcoming releases
 function toggleHandler(movieDisplay, sortMovies, movieGroup) {
     const viewToggle = document.getElementById("view-toggle");
     viewToggle.addEventListener("click", () => {
@@ -71,6 +83,7 @@ function toggleHandler(movieDisplay, sortMovies, movieGroup) {
     });
 }
 
+// Helper function used to display now playing movies or upcoming releases from toggleHandler()
 function toggleHelper(toggleDisplay, btn, btnText, header, headerText, movieDisplay, sortMovies) {
     movieDisplay.textContent = "";
     toggleDisplay(movieDisplay, sortMovies);
@@ -78,6 +91,7 @@ function toggleHelper(toggleDisplay, btn, btnText, header, headerText, movieDisp
     header.textContent = headerText;
 }
 
+// GET all movies that match user input from TMDB API
 function movieSearch(movieDisplay, sortMovies, movieGroup) {
     const searchForm = document.getElementById("search-form");
     searchForm.addEventListener("submit", event => {
@@ -97,6 +111,7 @@ function movieSearch(movieDisplay, sortMovies, movieGroup) {
     });
 }
 
+// Change listener used to sort movies alphabetically or by user rating
 function movieSort(movies, movieDisplay, sortMovies) {
     sortMovies.addEventListener("change", () => {
         if(sortMovies.value === "alphabetical") {
@@ -107,6 +122,7 @@ function movieSort(movies, movieDisplay, sortMovies) {
     })
 }
 
+// Helper function used to sort movies alphabetically or by user rating from movieSort()
 function sortHelper(movieDisplay, movies, sortType, sortOrder1, sortOrder2) {
     const sorted = movies.sort((a, b) => {
         if(a[sortType] < b[sortType]) {
@@ -121,6 +137,9 @@ function sortHelper(movieDisplay, movies, sortType, sortOrder1, sortOrder2) {
     sorted.forEach(movie => getMovieInfo(movie, movieDisplay));
 }
 
+// Used to add a "+" sign in between each word in a movie title and adding that as a query for when the user
+// clicks the link to get tickets on Fandango. Fandango actually still searches for most movies without adding
+// the + sign, but I did see a few cases where it did not work, so I decided to make this just to be safe
 function modifyTitle(title) {
     const newTitle = title.split("").map(letter => {
         if(letter === " ") {
