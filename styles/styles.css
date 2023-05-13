@@ -10,6 +10,10 @@ img {
     width: 250px;
 }
 
+h1 span {
+    font-weight: 100;
+}
+
 h1, #search-form {
     text-align: center;
 }
@@ -49,7 +53,7 @@ input[class="input-style"][type="text"] {
 .input-style {
     background-color:#01010e;
     color: white;
-    border:3px solid rgb(66, 0, 128);
+    border: 3px solid rgb(66, 0, 128);
     padding: 10px;
     cursor: pointer;
 }
@@ -61,6 +65,10 @@ input[class="input-style"][type="text"] {
     border: 1px solid rgb(66, 0, 128);
     border-radius: 2%;
     color: white;
+}
+
+.movie-card p {
+    font-weight: 300;
 }
 
 .movie-card a {
