@@ -10,6 +10,15 @@ img {
     width: 250px;
 }
 
+a {
+    color: rgb(66, 0, 128);
+}
+
+a:hover  {
+    color: white;
+}
+
+
 h1 span {
     font-weight: 100;
 }
@@ -69,14 +78,6 @@ input[class="input-style"][type="text"] {
 
 .movie-card p {
     font-weight: 300;
-}
-
-.movie-card a {
-    color: rgb(66, 0, 128);
-}
-
-.movie-card a:hover  {
-    color: white;
 }
 
 @media screen and (max-width: 1218px) {
